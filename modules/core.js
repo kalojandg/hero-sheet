@@ -23,11 +23,12 @@ function levelFromXP(xp) {
   return lvl;
 }
 
-// d8 hit die — level 1 gets max, rest get average (5)
-function baseHP(level, conMod) {
+// level 1 gets max die, rest get average (floor(die/2)+1)
+function baseHP(level, conMod, die) {
+  const d = die || 8;
   if (level <= 0) return 0;
-  let hp = 8 + conMod;
-  if (level >= 2) hp += (level - 1) * (5 + conMod);
+  let hp = d + conMod;
+  if (level >= 2) hp += (level - 1) * (Math.floor(d / 2) + 1 + conMod);
   return hp;
 }
 
@@ -49,6 +50,7 @@ const defaultState = {
   saveDcStat: 'wis',
   saveDcMagic: 0,
 
+  hdDie: 8,
   hpCurrent: 8,
   hpHomebrew: 0,
   hpAdjust: 0,
@@ -110,7 +112,7 @@ function derived() {
   };
   const prof = profBonus(level);
   const hdMax = level;
-  const formulaMaxHP = baseHP(level, mods.con)
+  const formulaMaxHP = baseHP(level, mods.con, st.hdDie)
     + (st.tough ? 2 * level : 0)
     + Number(st.hpAdjust || 0);
   const maxHP = Math.max(1, Math.floor(formulaMaxHP + Number(st.hpHomebrew || 0)));

@@ -60,6 +60,7 @@ function renderAll() {
   el('maxBloodSpan')   && (el('maxBloodSpan').textContent  = d.maxHP);
   el('hdMaxSpan')      && (el('hdMaxSpan').textContent     = d.hdMax);
   el('hdAvailSpan')    && (el('hdAvailSpan').textContent   = st.hdAvail);
+  el('hdDieSpan')      && (el('hdDieSpan').textContent     = `d${st.hdDie || 8}`);
   el('acSpan2')        && (el('acSpan2').textContent       = d.ac);
   el('saveDcSpan2')    && (el('saveDcSpan2').textContent   = d.saveDC);
   el('saveDcDetail')   && (el('saveDcDetail').textContent  = d.saveDC);
@@ -203,6 +204,7 @@ async function init() {
   window.attachSkills?.();
   window.attachInventory?.();
   window.attachPCChar?.();
+  window.attachNewChar?.();
   renderAll();
   // Activate first tab
   document.querySelector('[data-tab="basicinfo"]')?.click();

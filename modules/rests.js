@@ -14,7 +14,7 @@
         if (ans !== null) {
           const use = Math.max(0, Math.min(max, Math.floor(Number(ans) || 0)));
           if (use > 0) {
-            const rolled = prompt(`Total HP restored (${use}d8)?`, '0');
+            const rolled = prompt(`Total HP restored (${use}d${window.st.hdDie || 8})?`, '0');
             if (rolled !== null) {
               const heal = Math.max(0, Math.floor(Number(rolled) || 0));
               window.st.hdAvail -= use;

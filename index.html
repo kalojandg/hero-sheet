@@ -20,6 +20,7 @@
     <div class="header-right">
       <button id="btnShortRest">Short Rest</button>
       <button id="btnLongRest" class="primary">Long Rest</button>
+      <button id="btnNewChar">New Character</button>
       <button id="btnExport">Export</button>
       <input type="file" id="importFile" accept="application/json,.json" style="display:none">
       <button id="btnImport">Import</button>
@@ -126,6 +127,25 @@
     </div>
   </div>
 
+  <!-- New Character Modal -->
+  <div id="newCharModal" class="modal hidden">
+    <div class="modal-card">
+      <h3>New Character</h3>
+      <label>Hit Die
+        <select id="newCharDie">
+          <option value="6">d6 (Mage / Sorcerer)</option>
+          <option value="8" selected>d8 (Rogue / Bard)</option>
+          <option value="10">d10 (Fighter / Ranger)</option>
+          <option value="12">d12 (Barbarian)</option>
+        </select>
+      </label>
+      <div class="modal-btns">
+        <button id="newCharConfirm" class="primary">Create</button>
+        <button id="newCharCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Skills Modal -->
   <div id="skillModal" class="modal hidden">
     <div class="modal-card">
@@ -144,6 +164,7 @@
 
 <!-- Scripts: core first, then modules, then app coordinator -->
 <script src="modules/core.js"></script>
+<script src="modules/newchar.js"></script>
 <script src="modules/combat.js"></script>
 <script src="modules/skills.js"></script>
 <script src="modules/stats.js"></script>
