@@ -1,0 +1,202 @@
+:root {
+  --bg:      #0b0c12;
+  --panel:   #0f111a;
+  --panel2:  #0b0e15;
+  --muted:   #9aa3b2;
+  --text:    #e6e6ef;
+  --border:  #262b3a;
+  --pill:    #0c0e16;
+  --pill2:   #14182a;
+  --accent:  #3a7afe;
+  --success: #2ecc71;
+  --danger:  #e74c3c;
+  --sk-head-bg:     rgba(105,122,160,.18);
+  --sk-head-text:   #cfe1ff;
+  --sk-head-border: rgba(170,190,255,.25);
+  --sk-body-bg:     rgba(20,24,34,.9);
+}
+
+* { box-sizing: border-box }
+.hidden { display: none !important }
+
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, Segoe UI, Roboto, Arial;
+  font-size: 14px;
+}
+
+#app { max-width: 900px; margin: 0 auto; padding: 12px }
+
+/* ── Header ── */
+.header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px; flex-wrap: wrap;
+}
+.header h1 { font-size: 1.1em; margin: 0; color: var(--accent) }
+.spacer { flex: 1 }
+.header-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap }
+
+/* ── Combat (always-visible) ── */
+.combat-section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 10px }
+
+.pillbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px }
+.pill {
+  background: var(--pill); border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; font-size: .8em; white-space: nowrap;
+}
+.pill .big { font-size: 1.3em; font-weight: 700; color: var(--accent) }
+
+.controls { display: flex; align-items: center; gap: 6px; flex-wrap: wrap }
+.mt-8 { margin-top: 8px }
+
+/* ── Death Saves ── */
+.ds-wrap { display: flex; flex-direction: column; gap: 4px; margin: 6px 0 }
+.ds-row { display: flex; align-items: center; gap: 6px }
+.ds-label { width: 58px; font-size: .75em; color: var(--muted) }
+.ds-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid var(--success); background: transparent;
+  display: inline-block;
+}
+.ds-dot.fail { border-color: var(--danger) }
+.ds-dot.filled { background: var(--success) }
+.ds-dot.fail.filled { background: var(--danger) }
+
+/* ── YOU DIED ── */
+.you-died {
+  position: fixed; inset: 0; background: rgba(0,0,0,.85);
+  display: flex; align-items: center; justify-content: center; z-index: 999;
+}
+.you-died-card { background: #1a0000; border: 2px solid var(--danger); border-radius: 12px; padding: 32px; text-align: center }
+.you-died-title { font-size: 2.5em; font-weight: 900; color: var(--danger); letter-spacing: .1em; margin-bottom: 16px }
+
+/* ── Tab Nav ── */
+.tab-nav {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  border-bottom: 2px solid var(--border); margin-bottom: 12px;
+}
+.tab-btn {
+  background: transparent; border: none; color: var(--muted);
+  padding: 8px 14px; cursor: pointer; border-radius: 4px 4px 0 0;
+  font-size: .85em; transition: color .15s, background .15s;
+}
+.tab-btn:hover { color: var(--text); background: var(--panel) }
+.tab-btn.active { color: var(--accent); border-bottom: 2px solid var(--accent); margin-bottom: -2px; font-weight: 600 }
+
+.tab { display: none }
+.tab.active { display: block }
+
+/* ── Tab content ── */
+.tab-section { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px }
+.section-title { font-weight: 600; color: var(--accent); margin: 12px 0 6px; font-size: .85em; text-transform: uppercase; letter-spacing: .05em }
+.section-header { display: flex; align-items: center; justify-content: space-between; gap: 8px }
+.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0 }
+.muted-note { color: var(--muted); font-size: .85em }
+
+/* ── Info cards ── */
+.info-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 }
+.info-card {
+  background: var(--pill2); border: 1px solid var(--border); border-radius: 6px;
+  padding: 8px 12px; text-align: center; min-width: 80px;
+}
+.info-label { font-size: .7em; color: var(--muted); text-transform: uppercase }
+.info-value { font-size: 1.4em; font-weight: 700; color: var(--accent) }
+
+/* ── Form elements ── */
+input[type=text], input[type=number], select, textarea {
+  background: var(--pill2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 4px;
+  padding: 4px 8px; font-size: .9em;
+}
+input:focus, select:focus, textarea:focus { outline: 1px solid var(--accent) }
+input.small { width: 60px; text-align: right }
+input.score-input { width: 52px; text-align: center }
+
+.field-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; flex-wrap: wrap }
+.field-row.wrap { flex-wrap: wrap }
+.checkbox-label { display: flex; align-items: center; gap: 5px; cursor: pointer }
+.textarea-label { display: flex; flex-direction: column; gap: 4px; margin: 8px 0; font-size: .85em; color: var(--muted) }
+.textarea-label textarea { resize: vertical; width: 100%; color: var(--text) }
+
+/* ── Buttons ── */
+button {
+  background: var(--panel2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 5px;
+  padding: 6px 12px; cursor: pointer; font-size: .85em;
+  transition: background .15s;
+}
+button:hover { background: var(--pill2) }
+button.primary { background: var(--accent); color: #fff; border-color: var(--accent) }
+button.primary:hover { background: #5a9afe }
+button.success { background: #1a5c38; border-color: var(--success); color: #aaffcc }
+button.success:hover { background: #226644 }
+button.danger  { background: #5c1a1a; border-color: var(--danger);  color: #ffaaaa }
+button.danger:hover  { background: #661a1a }
+button.btn-sm { padding: 3px 8px; font-size: .8em }
+.icon-btn { background: transparent; border: none; padding: 2px 4px; cursor: pointer; font-size: 1em }
+
+/* ── Ability table ── */
+.ability-table { width: 100%; border-collapse: collapse }
+.ability-table th, .ability-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); text-align: center }
+.ability-table th { font-size: .75em; text-transform: uppercase; color: var(--muted) }
+.ability-table td:first-child { font-weight: 700; text-align: left }
+
+/* ── Data tables (inventory, lang, instruments) ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: .88em }
+.data-table th, .data-table td { padding: 6px 8px; border-bottom: 1px solid var(--border) }
+.data-table th { color: var(--muted); font-weight: 600; font-size: .8em; text-transform: uppercase }
+td.right { text-align: right }
+.inv-drag-handle { cursor: grab; color: var(--muted); width: 20px }
+
+/* ── Skills accordion ── */
+.skill-item { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; overflow: hidden }
+.skill-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; cursor: pointer;
+  background: var(--sk-head-bg);
+  transition: background .15s;
+}
+.skill-header:hover { background: rgba(105,122,160,.28) }
+.skill-level-badge {
+  font-size: .7em; font-weight: 700; padding: 2px 6px;
+  border-radius: 4px; background: var(--accent); color: #fff;
+  white-space: nowrap;
+}
+.skill-name { flex: 1; font-weight: 500; color: var(--sk-head-text) }
+.skill-arrow { color: var(--muted); transition: transform .2s; font-size: .75em }
+.skill-arrow.expanded { transform: rotate(90deg) }
+.skill-body { padding: 10px 12px; background: var(--sk-body-bg); font-size: .88em; line-height: 1.5; color: var(--muted) }
+.skill-body p { margin: 0 0 8px }
+.skill-actions { display: flex; gap: 6px }
+
+/* ── Gold ── */
+.gold-display { display: flex; gap: 8px; flex-wrap: wrap; margin: 8px 0 }
+.gold-coin { text-align: center; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border); min-width: 56px }
+.gold-coin span { display: block; font-size: 1.3em; font-weight: 700 }
+.gold-coin small { font-size: .7em; color: var(--muted); text-transform: uppercase }
+.gold-coin.pp { color: #d4cfff }
+.gold-coin.gp { color: #ffd700 }
+.gold-coin.sp { color: #c0c0c0 }
+.gold-coin.cp { color: #b5651d }
+.gold-inputs { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin: 8px 0 }
+.error-note { color: var(--danger); font-size: .82em; margin-top: 4px }
+
+/* ── Modals ── */
+.modal {
+  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+.modal-card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 20px; min-width: 300px; max-width: 420px; width: 90% }
+.modal-card h3 { margin: 0 0 14px; font-size: 1em }
+.modal-card label { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; font-size: .85em; color: var(--muted) }
+.modal-card label input, .modal-card label textarea, .modal-card label select { color: var(--text); width: 100% }
+.modal-card textarea { resize: vertical }
+.modal-btns { display: flex; gap: 8px; margin-top: 14px; justify-content: flex-end }
+
+/* ── Status emoji ── */
+.status-emoji { font-size: 1.4em }
+
+/* ── Life status ── */
+#lifeStatus { font-size: 1.5em }

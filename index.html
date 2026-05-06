@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Sheet</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+<div id="app">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Hero Sheet</h1>
+    </div>
+    <div class="spacer"></div>
+    <div id="lifeStatus" class="status-emoji">🙂</div>
+    <div class="header-right">
+      <button id="btnShortRest">Short Rest</button>
+      <button id="btnLongRest" class="primary">Long Rest</button>
+      <button id="btnExport">Export</button>
+      <input type="file" id="importFile" accept="application/json,.json" style="display:none">
+      <button id="btnImport">Import</button>
+    </div>
+  </div>
+
+  <!-- Combat Section (always visible) -->
+  <div class="combat-section">
+    <div class="pillbar pillbar-main">
+      <div class="pill">Blood&nbsp;<span class="big" id="hpCurrentSpan">8</span>/<span class="big" id="hpMaxSpan">8</span></div>
+      <div class="pill">AC&nbsp;<span class="big" id="acSpan">10</span></div>
+      <div class="pill">Prof&nbsp;<span class="big" id="profSpan">+2</span></div>
+      <div class="pill">Save DC&nbsp;<span class="big" id="saveDcSpan">10</span></div>
+    </div>
+    <div class="pillbar">
+      <div class="pill">Melee Atk&nbsp;<span class="big" id="meleeAtkSpan">+2</span></div>
+      <div class="pill">Ranged Atk&nbsp;<span class="big" id="rangedAtkSpan">+2</span></div>
+    </div>
+
+    <div class="controls">
+      <label>Δ <input id="hpDelta" type="number" step="1" value="1" class="small"></label>
+      <button id="btnDamage" class="danger">Take Damage</button>
+      <button id="btnHeal" class="success">Heal</button>
+      <button id="btnHitAtZero">Hit at 0 → DS Fail</button>
+      <button id="btnHealFromZero" class="success">Heal from 0</button>
+    </div>
+
+    <div class="controls mt-8">
+      <button id="btnDsPlus" class="success">Death Save ✓</button>
+      <button id="btnDsMinus" class="danger">Death Save ✗</button>
+      <button id="btnCrit" class="success">Crit (2× success)</button>
+      <button id="btnCritFail" class="danger">Crit Fail (+2 fail)</button>
+      <button id="btnStabilize">Stabilize</button>
+    </div>
+  </div>
+
+  <!-- Death Saves display -->
+  <div id="deathSavesUI" class="ds-wrap hidden">
+    <div class="ds-row">
+      <span class="ds-label">Success</span>
+      <span class="ds-dot" id="dsS1"></span>
+      <span class="ds-dot" id="dsS2"></span>
+      <span class="ds-dot" id="dsS3"></span>
+    </div>
+    <div class="ds-row">
+      <span class="ds-label">Fail</span>
+      <span class="ds-dot fail" id="dsF1"></span>
+      <span class="ds-dot fail" id="dsF2"></span>
+      <span class="ds-dot fail" id="dsF3"></span>
+    </div>
+  </div>
+
+  <!-- YOU DIED overlay -->
+  <div id="youDiedOverlay" class="you-died hidden">
+    <div class="you-died-card">
+      <div class="you-died-title">YOU DIED</div>
+      <button id="btnResurrect" class="success">Resurrect (1 Blood)</button>
+    </div>
+  </div>
+
+  <!-- Tab Navigation -->
+  <div class="tab-nav">
+    <button class="tab-btn" data-tab="basicinfo">Basic Info</button>
+    <button class="tab-btn" data-tab="stats">Stats</button>
+    <button class="tab-btn" data-tab="skills">Skills</button>
+    <button class="tab-btn" data-tab="inventory">Inventory</button>
+    <button class="tab-btn" data-tab="pcchar">PC Char</button>
+  </div>
+
+  <!-- Tab Panes (filled by loadTabs) -->
+  <div id="tab-basicinfo" class="tab"></div>
+  <div id="tab-stats"     class="tab"></div>
+  <div id="tab-skills"    class="tab"></div>
+  <div id="tab-inventory" class="tab"></div>
+  <div id="tab-pcchar"    class="tab"></div>
+
+  <!-- Modals (always in DOM) -->
+
+  <!-- Inventory Modal -->
+  <div id="invModal" class="modal hidden">
+    <div class="modal-card">
+      <h3 id="invModalTitle">Add item</h3>
+      <label>Name <input id="invName" type="text" placeholder="Item name"></label>
+      <label>Qty  <input id="invQty"  type="number" min="0" value="1"></label>
+      <label>Note <input id="invNote" type="text" placeholder="Optional note"></label>
+      <div class="modal-btns">
+        <button id="invSave" class="primary">Save</button>
+        <button id="invCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PC Char Modal (language / instrument) -->
+  <div id="pcModal" class="modal hidden">
+    <div class="modal-card">
+      <h3 id="pcModalTitle">Add</h3>
+      <label id="pcModalLabel">Name
+        <input id="pcModalName" type="text" placeholder="...">
+      </label>
+      <div class="modal-btns">
+        <button id="pcModalSave" class="primary">Save</button>
+        <button id="pcModalCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skills Modal -->
+  <div id="skillModal" class="modal hidden">
+    <div class="modal-card">
+      <h3 id="skillModalTitle">Add Skill / Feature</h3>
+      <label>Name        <input id="skillName"  type="text" placeholder="Sneak Attack"></label>
+      <label>Level       <input id="skillLevel" type="number" min="1" max="20" value="1"></label>
+      <label>Description <textarea id="skillDesc" rows="3" placeholder="What does it do?"></textarea></label>
+      <div class="modal-btns">
+        <button id="skillSave" class="primary">Save</button>
+        <button id="skillCancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scripts: core first, then modules, then app coordinator -->
+<script src="modules/core.js"></script>
+<script src="modules/combat.js"></script>
+<script src="modules/skills.js"></script>
+<script src="modules/stats.js"></script>
+<script src="modules/rests.js"></script>
+<script src="modules/inventory.js"></script>
+<script src="modules/pcchar.js"></script>
+<script src="app.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./service-worker.js');
+  }
+</script>
+</body>
+</html>

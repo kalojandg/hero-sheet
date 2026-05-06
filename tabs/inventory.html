@@ -1,0 +1,27 @@
+<div class="tab-section">
+  <div class="section-header">
+    <div class="section-title" style="margin:0">Items</div>
+    <button id="btnInvAdd" class="primary">+ Add item</button>
+  </div>
+  <div id="invTableRoot" style="margin-top:10px"><small>No items yet.</small></div>
+
+  <hr class="divider">
+
+  <div class="section-title">Gold</div>
+  <div class="gold-display">
+    <div class="gold-coin pp"><span id="goldPlatinumSpan">0</span><small>PP</small></div>
+    <div class="gold-coin gp"><span id="goldGoldSpan">0</span><small>GP</small></div>
+    <div class="gold-coin sp"><span id="goldSilverSpan">0</span><small>SP</small></div>
+    <div class="gold-coin cp"><span id="goldCopperSpan">0</span><small>CP</small></div>
+  </div>
+
+  <div class="gold-inputs">
+    <input id="goldPlatinumInput" type="number" min="0" step="1" placeholder="PP" class="small">
+    <input id="goldGoldInput"     type="number" min="0" step="1" placeholder="GP" class="small">
+    <input id="goldSilverInput"   type="number" min="0" step="1" placeholder="SP" class="small">
+    <input id="goldCopperInput"   type="number" min="0" step="1" placeholder="CP" class="small">
+    <button id="goldGainBtn" class="success">Gain</button>
+    <button id="goldSpendBtn" class="danger">Spend</button>
+  </div>
+  <div id="goldSpendError" class="error-note hidden">Not enough gold!</div>
+</div>

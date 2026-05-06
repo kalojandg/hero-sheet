@@ -1,0 +1,17 @@
+{
+  "name": "hero-sheet",
+  "version": "1.0.0",
+  "description": "Generic hero character sheet — installable PWA",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "serve": "http-server . -p 45279 -c-1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "http-server": "^14.1.1"
+  }
+}
