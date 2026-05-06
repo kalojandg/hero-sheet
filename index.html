@@ -20,6 +20,7 @@
     <div class="header-right">
       <button id="btnShortRest">Short Rest</button>
       <button id="btnLongRest" class="primary">Long Rest</button>
+      <button id="btnInstall" class="hidden">Install App</button>
       <button id="btnNewChar">New Character</button>
       <button id="btnExport">Export</button>
       <input type="file" id="importFile" accept="application/json,.json" style="display:none">
@@ -177,6 +178,20 @@
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./service-worker.js');
   }
+
+  let __installPrompt = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    __installPrompt = e;
+    document.getElementById('btnInstall')?.classList.remove('hidden');
+  });
+  window.addEventListener('appinstalled', () => {
+    document.getElementById('btnInstall')?.classList.add('hidden');
+    __installPrompt = null;
+  });
+  document.getElementById('btnInstall')?.addEventListener('click', () => {
+    if (__installPrompt) { __installPrompt.prompt(); __installPrompt = null; }
+  });
 </script>
 </body>
 </html>

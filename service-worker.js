@@ -1,11 +1,12 @@
-const CACHE = 'hero-sheet-v1';
+const CACHE = 'hero-sheet-v2';
 const ASSETS = [
   './', './index.html', './app.js', './styles.css', './manifest.json',
   './modules/core.js', './modules/combat.js', './modules/skills.js',
   './modules/stats.js', './modules/rests.js', './modules/inventory.js',
-  './modules/pcchar.js',
+  './modules/pcchar.js', './modules/newchar.js',
   './tabs/basicinfo.html', './tabs/stats.html', './tabs/skills.html',
   './tabs/inventory.html', './tabs/pcchar.html',
+  './icons/icon-192.png', './icons/icon-512.png',
 ];
 
 self.addEventListener('install', e => {
