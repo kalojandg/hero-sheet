@@ -25,13 +25,11 @@
           <span class="skill-level-badge">Lv.${Number(sk.level) || 1}</span>
           <span class="skill-name">${escHtml(sk.name)}</span>
           <span class="skill-arrow" id="skill-arrow-${i}">▶</span>
+          <button class="btn-sm" data-skill-edit="${i}">Edit</button>
+          <button class="btn-sm danger" data-skill-del="${i}">Delete</button>
         </div>
         <div class="skill-body hidden" id="skill-body-${i}">
           <p>${escHtml(sk.description)}</p>
-          <div class="skill-actions">
-            <button class="btn-sm" data-skill-edit="${i}">Edit</button>
-            <button class="btn-sm danger" data-skill-del="${i}">Delete</button>
-          </div>
         </div>
       </div>`).join('');
 
